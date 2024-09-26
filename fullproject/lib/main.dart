@@ -6,7 +6,13 @@ void main() {
   ));
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int currentLevel = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +71,7 @@ class Home extends StatelessWidget {
 
             SizedBox(height:19.0),
             Text(
-              '9',
+              '$currentLevel',
               style: TextStyle(
                   color: Colors.amber[400],
                   letterSpacing: 2.0,
@@ -99,17 +105,31 @@ class Home extends StatelessWidget {
 
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Text(
-            'click me',
-                style: TextStyle(
-            color: Colors.black,
-        ),
-        ),
-        backgroundColor: Colors.grey,
-
-        
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                currentLevel += 1;
+              });
+            },
+            child: Icon(Icons.add),
+            backgroundColor: Colors.grey[400],
+          ),
+          SizedBox(width: 10), // Spacing between the buttons
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                if (currentLevel > 0) {
+                  currentLevel -= 1;
+                }
+              });
+            },
+            child: Icon(Icons.remove),
+            backgroundColor: Colors.grey[400],
+          ),
+        ],
       ),
     );
   }
